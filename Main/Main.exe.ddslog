@@ -1,0 +1,43 @@
+********************  2025-09-08 16:33:57:188  ********************
+Current ZRDDS version(2.4.4-r2761701) for SEU was compiled at Aug 22 2025 16:09:15
+*******************************************************************
+********************  2025-09-08 16:33:57:190  ********************
+LOGINFO: LEVEL(USER_INFO)
+FUNC: SystemConfiguration.cpp:ZRDDSSystemConfigSetGlobalConfig(LINE: 223)
+need 512B for reserve packet length , The actual  package length set for sample of the four bytes alignment is  4193792B
+*******************************************************************
+********************  2025-09-08 16:33:57:437  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:438  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:438  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:440  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:450  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:451  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: ZRNetRecvThread.cpp:ZRNetTCPListenThread::setKeepAliveOption(LINE: 1305)
+ignoring keep_alive option on Windows.
+*******************************************************************
+********************  2025-09-08 16:33:57:504  ********************
+LOGINFO: LEVEL(WARNING)
+FUNC: NetLocatorInfo.cpp:UDPLocatorInfoInitial(LINE: 1365)
+local((0138a8c0)(c4830000)(00000000)(0a000004)) multicast send locator number is ZERO.
+*******************************************************************

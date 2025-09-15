@@ -1,0 +1,33 @@
+graph TB
+    A[JSON配置文件] --> B[配置解析模块]
+    B --> C[DDS实体管理模块]
+    C --> D[Publisher进程]
+    C --> E[Subscriber进程]
+    
+    D --> F[性能数据采集模块]
+    E --> F
+    
+    F --> G[统计分析模块]
+    G --> H[结果输出模块]
+    
+    H --> I[CSV报告]
+    H --> J[可视化图表]
+    H --> K[性能指标汇总]
+    
+    L[QoS配置文件] --> C
+    M[IDL数据类型] --> C
+    
+    subgraph "DDS中间件层"
+        N[ZRDDS API]
+        D --> N
+        E --> N
+    end
+    
+    subgraph "系统监控"
+        O[CPU监控]
+        P[内存监控]
+        Q[网络监控]
+        F --> O
+        F --> P
+        F --> Q
+    end

@@ -1,0 +1,48 @@
+<zrdds_qos xmlns="http://www.omg.org/dds/">
+    <qos_library name="default_lib">
+        <qos_profile name="default_profile">
+            <participantfactory_qos name="ExampleApp"/>
+                 <participant_qos name="rio_dp">
+                     <discovery_config>
+                        <participant_liveliness_assert_period>
+                            <sec>3</sec>
+                            <nanosec>0</nanosec>
+                        </participant_liveliness_assert_period>
+                        <participant_liveliness_lease_duration>
+                            <sec>10</sec>
+                            <nanosec>0</nanosec>
+                        </participant_liveliness_lease_duration>
+                    </discovery_config>
+                    <usertraffic_receive_addresses>
+                         <addresses>
+                            <element>tcpv4://default//0</element>
+                         </addresses>
+                     </usertraffic_receive_addresses>
+                </participant_qos>
+                 <participant_qos name="udp_dp">
+                    <usertraffic_receive_addresses>
+                        <addresses>
+                            <element>udpv4://default//0</element>
+                        </addresses>
+                     </usertraffic_receive_addresses>
+                 </participant_qos>
+                <datawriter_qos name="DataWriterReliability">
+                    <reliability>
+                        <kind>RELIABLE_RELIABILITY_QOS</kind>
+                    </reliability>
+                    <history>
+                        <kind>KEEP_ALL_HISTORY_QOS</kind>
+                     </history>
+                 </datawriter_qos>
+                <datareader_qos name="DataReaderReliability">
+                    <reliability>
+                        <kind>RELIABLE_RELIABILITY_QOS</kind>
+                        <max_blocking_time>
+                            <sec>1</sec>
+                            <nanosec>100</nanosec>
+                        </max_blocking_time>
+                    </reliability>
+                 </datareader_qos>
+             </qos_profile>
+        </qos_library>
+     </zrdds_qos>

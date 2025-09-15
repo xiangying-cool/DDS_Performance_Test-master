@@ -1,0 +1,186 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e3f2fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f3e5f5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="controlBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff3e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffe0b2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="configBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f5e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c8e6c9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="ddsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e1f5fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b3e5fc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="testBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fce4ec;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8bbd9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="statsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f3e5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e1bee7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="url(#mainBg)" />
+  
+  <!-- 标题 -->
+  <text x="600" y="30" text-anchor="middle" font-size="24" font-weight="bold" fill="#1565c0">ZRDDS 性能测试系统架构图</text>
+  
+  <!-- 总控模块 (Main) -->
+  <rect x="450" y="60" width="300" height="80" fill="url(#controlBg)" stroke="#ff8f00" stroke-width="3" rx="10"/>
+  <text x="600" y="85" text-anchor="middle" font-size="18" font-weight="bold" fill="#e65100">总控模块 (Main)</text>
+  <text x="470" y="105" font-size="12" fill="#bf360c">• 程序入口与流程控制</text>
+  <text x="470" y="120" font-size="12" fill="#bf360c">• 模块协调与异常处理</text>
+  
+  <!-- 配置解析模块 -->
+  <rect x="80" y="180" width="220" height="120" fill="url(#configBg)" stroke="#2e7d32" stroke-width="2" rx="8"/>
+  <text x="190" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">配置解析模块</text>
+  <text x="90" y="225" font-size="12" fill="#2e7d32">• Config 类</text>
+  <text x="90" y="245" font-size="12" fill="#2e7d32">• JSON 解析</text>
+  <text x="90" y="265" font-size="12" fill="#2e7d32">• 配置选择与管理</text>
+  <text x="90" y="285" font-size="12" fill="#2e7d32">• GlobalConfig 全局配置</text>
+  
+  <!-- 日志系统 -->
+  <rect x="340" y="180" width="200" height="120" fill="url(#configBg)" stroke="#2e7d32" stroke-width="2" rx="8"/>
+  <text x="440" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">日志系统</text>
+  <text x="350" y="225" font-size="12" fill="#2e7d32">• Logger 单例类</text>
+  <text x="350" y="245" font-size="12" fill="#2e7d32">• 文件日志记录</text>
+  <text x="350" y="265" font-size="12" fill="#2e7d32">• 控制台输出</text>
+  <text x="350" y="285" font-size="12" fill="#2e7d32">• 时间戳格式化</text>
+  
+  <!-- DDS实体管理模块 -->
+  <rect x="580" y="180" width="240" height="120" fill="url(#controlBg)" stroke="#ff8f00" stroke-width="2" rx="8"/>
+  <text x="700" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#e65100">DDS实体管理模块</text>
+  <text x="590" y="225" font-size="12" fill="#bf360c">• DDSManager 类</text>
+  <text x="590" y="245" font-size="12" fill="#bf360c">• Publisher/Subscriber 管理</text>
+  <text x="590" y="265" font-size="12" fill="#bf360c">• DataWriter/DataReader</text>
+  <text x="590" y="285" font-size="12" fill="#bf360c">• 回调函数处理</text>
+  
+  <!-- 内存管理模块 -->
+  <rect x="860" y="180" width="200" height="120" fill="url(#controlBg)" stroke="#ff8f00" stroke-width="2" rx="8"/>
+  <text x="960" y="205" text-anchor="middle" font-size="16" font-weight="bold" fill="#e65100">内存管理模块</text>
+  <text x="870" y="225" font-size="12" fill="#bf360c">• ZRMemPool 全局内存池</text>
+  <text x="870" y="245" font-size="12" fill="#bf360c">• ZRMalloc/ZRFree</text>
+  <text x="870" y="265" font-size="12" fill="#bf360c">• TestData 数据结构</text>
+  <text x="870" y="285" font-size="12" fill="#bf360c">• 内存生命周期管理</text>
+  
+  <!-- 性能测试核心模块 -->
+  <rect x="200" y="360" width="420" height="140" fill="url(#controlBg)" stroke="#ff8f00" stroke-width="2" rx="8"/>
+  <text x="405" y="385" text-anchor="middle" font-size="16" font-weight="bold" fill="#ef6c00">性能测试核心模块</text>
+  
+  <!-- 性能测试子模块 -->
+  <rect x="220" y="400" width="80" height="80" fill="#ffcdd2" stroke="#d32f2f" stroke-width="1" rx="5"/>
+  <text x="260" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">数据</text>
+  <text x="260" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">收发测试</text>
+  <text x="225" y="450" font-size="10" fill="#d32f2f">• 同步机制</text>
+  <text x="225" y="465" font-size="10" fill="#d32f2f">• 回调验证</text>
+  
+  <rect x="320" y="400" width="80" height="80" fill="#ffcdd2" stroke="#d32f2f" stroke-width="1" rx="5"/>
+  <text x="360" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">吞吐量</text>
+  <text x="360" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">大小测试</text>
+  <text x="325" y="450" font-size="10" fill="#d32f2f">• 动态数据</text>
+  <text x="325" y="465" font-size="10" fill="#d32f2f">• 内存分配</text>
+  
+  <rect x="420" y="400" width="80" height="80" fill="#ffcdd2" stroke="#d32f2f" stroke-width="1" rx="5"/>
+  <text x="460" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">延迟</text>
+  <text x="460" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">监控</text>
+  <text x="425" y="450" font-size="10" fill="#d32f2f">• 超时检测</text>
+  <text x="425" y="465" font-size="10" fill="#d32f2f">• 性能统计</text>
+  
+  <rect x="520" y="400" width="80" height="80" fill="#ffcdd2" stroke="#d32f2f" stroke-width="1" rx="5"/>
+  <text x="560" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">并发</text>
+  <text x="560" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#b71c1c">控制</text>
+  <text x="525" y="450" font-size="10" fill="#d32f2f">• 多线程</text>
+  <text x="525" y="465" font-size="10" fill="#d32f2f">• 原子操作</text>
+  
+  <!-- 统计输出模块（合并后） -->
+  <rect x="250" y="560" width="700" height="180" fill="url(#statsBg)" stroke="#7b1fa2" stroke-width="2" rx="8"/>
+  <text x="600" y="585" text-anchor="middle" font-size="18" font-weight="bold" fill="#4a148c">统计输出模块</text>
+  
+  <!-- 统计功能区域 -->
+  <rect x="270" y="600" width="320" height="120" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+  <text x="430" y="620" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a148c">统计分析功能</text>
+  <text x="280" y="640" font-size="12" fill="#c2185b">• Topic/QoS 分组统计</text>
+  <text x="280" y="655" font-size="12" fill="#c2185b">• 性能指标计算</text>
+  <text x="280" y="670" font-size="12" fill="#c2185b">• 数据聚合处理</text>
+  <text x="280" y="685" font-size="12" fill="#c2185b">• 实时监控状态</text>
+  <text x="280" y="700" font-size="12" fill="#c2185b">• 延迟统计分析</text>
+  
+  <!-- 输出功能区域 -->
+  <rect x="610" y="600" width="320" height="120" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+  <text x="770" y="620" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a148c">结果输出功能</text>
+  
+  <!-- 输出子功能 -->
+  <rect x="630" y="635" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="665" y="648" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">控制台</text>
+  <text x="665" y="660" text-anchor="middle" font-size="10" fill="#7b1fa2">输出</text>
+  
+  <rect x="720" y="635" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="755" y="648" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">文件</text>
+  <text x="755" y="660" text-anchor="middle" font-size="10" fill="#7b1fa2">日志</text>
+  
+  <rect x="810" y="635" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="845" y="648" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">CSV</text>
+  <text x="845" y="660" text-anchor="middle" font-size="10" fill="#7b1fa2">报告</text>
+  
+  <rect x="630" y="680" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="665" y="693" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">吞吐量</text>
+  <text x="665" y="705" text-anchor="middle" font-size="10" fill="#7b1fa2">统计</text>
+  
+  <rect x="720" y="680" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="755" y="693" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">性能</text>
+  <text x="755" y="705" text-anchor="middle" font-size="10" fill="#7b1fa2">指标</text>
+  
+  <rect x="810" y="680" width="70" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" rx="3"/>
+  <text x="845" y="693" text-anchor="middle" font-size="10" font-weight="bold" fill="#6a1b9a">可视化</text>
+  <text x="845" y="705" text-anchor="middle" font-size="10" fill="#7b1fa2">支持</text>
+  
+  <!-- ZRDDS 底层框架 -->
+  <rect x="80" y="770" width="1040" height="50" fill="#f5f5f5" stroke="#424242" stroke-width="2" rx="8"/>
+  <text x="600" y="790" text-anchor="middle" font-size="16" font-weight="bold" fill="#212121">ZRDDS 底层框架</text>
+  <text x="100" y="810" font-size="12" fill="#424242">DomainParticipant • DataWriter • DataReader • TypeSupport • QoS • Transport • Discovery • Serialization</text>
+  
+  <!-- 连接线 -->
+  <!-- 总控到各模块的连接 -->
+  <path d="M 520 140 L 190 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 580 140 L 440 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 650 140 L 700 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 680 140 L 960 180" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 配置到测试模块 -->
+  <path d="M 190 300 L 320 360" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- DDS管理到测试模块 -->
+  <path d="M 700 300 L 480 360" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 测试模块到统计输出模块 -->
+  <path d="M 390 500 L 450 560" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 日志到统计输出模块 -->
+  <path d="M 440 300 L 500 560" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- 箭头标记定义 -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+    </marker>
+  </defs>
+  
+  <!-- 数据流标注 -->
+  <text x="20" y="350" font-size="12" fill="#555" font-weight="bold">配置数据流</text>
+  <text x="20" y="450" font-size="12" fill="#555" font-weight="bold">测试数据流</text>
+  <text x="20" y="650" font-size="12" fill="#555" font-weight="bold">统计输出流</text>
+  
+  <!-- 状态标注 -->
+  <circle cx="1150" cy="115" r="8" fill="#4caf50"/>
+  <text x="1020" y="120" font-size="12" fill="#2e7d32">已实现模块</text>
+  
+  <circle cx="1150" cy="145" r="8" fill="#ff9800"/>
+  <text x="1020" y="150" font-size="12" fill="#ef6c00">部分实现</text>
+</svg>

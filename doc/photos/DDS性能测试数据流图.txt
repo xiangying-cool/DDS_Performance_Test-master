@@ -1,0 +1,53 @@
+flowchart LR
+ subgraph Publisher端["Publisher端"]
+        B["添加时间戳"]
+        A["生成测试数据"]
+        C["DDS DataWriter"]
+        D["网络传输层"]
+  end
+ subgraph s2["网络层"]
+        E["UDP/TCP协议"]
+        F["以太网"]
+  end
+ subgraph s3["Subscriber端"]
+        G["DDS DataReader"]
+        H["接收回调函数"]
+        I["提取时间戳"]
+        J["计算延迟"]
+  end
+ subgraph s4["性能采集"]
+        K["系统资源监控"]
+        L["网络流量监控"]
+        M["DDS统计信息"]
+  end
+ subgraph s5["数据处理"]
+        N["延迟统计"]
+        O["资源占用统计"]
+        P["吞吐量统计"]
+        Q["可靠性统计"]
+        R["综合分析"]
+  end
+    A --> B
+    B --> C
+    C --> D & K & M
+    D --> E
+    E --> F & L
+    F --> G
+    G --> H & K & M
+    H --> I
+    I --> J
+    J --> N
+    K --> O
+    L --> P
+    M --> Q
+    N --> R
+    O --> R
+    P --> R
+    Q --> R
+    R --> S["生成测试报告"]
+
+    style Publisher端 fill:#FFE0B2
+    style s2 fill:#FFF9C4
+    style s3 fill:#C8E6C9
+    style s4 fill:#BBDEFB
+    style s5 fill:#E1BEE7

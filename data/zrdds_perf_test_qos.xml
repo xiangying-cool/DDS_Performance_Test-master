@@ -1,0 +1,168 @@
+<zrdds_qos xmlns="http://www.omg.org/dds/">
+  <qos_library name="default_lib">
+    <qos_profile name="default_profile">
+      <!-- 修改后的 participantfactory_qos -->
+      <participantfactory_qos name="default">
+        <property>
+          <value>
+            <!-- 新增：设置内存池模式为 0 (使用系统 malloc/free) -->
+            <element>
+              <name>sysctl.global.mempool.mem_mode</name>
+              <value>0</value>
+              <propagate>false</propagate>
+            </element>
+            <!-- 原有配置保持不变 -->
+            <element>
+              <name>sysctl.global.net.zrnet_ipv4_tcp_max_packet_length</name>
+              <value>4194304</value>
+            </element>
+            <element>
+              <name>sysctl.global.net.tcp_max_batch_num</name>
+              <value>32</value>
+            </element>
+            <element>
+              <name>sysctl.global.net.tcp_max_batch_len</name>
+              <value>30000000</value>
+            </element>
+          </value>
+        </property>
+	  </participantfactory_qos>
+      <!--
+      <participantfactory_qos name="rio_dpf">
+        <rapidio_config>
+          <controllers_config>
+            <element>
+              <rapidio_controller>0</rapidio_controller>
+              <rapidio_address>0x10000000</rapidio_address>
+              <receive_window_size>0x1000000</receive_window_size>
+              <receive_subwindow_size>0x400000</receive_subwindow_size>
+            </element>
+          </controllers_config>
+        </rapidio_config>
+      </participantfactory_qos>
+      -->
+      <participant_qos name="udp_dp">
+        <discovery_config>
+          <participant_liveliness_assert_period>
+            <sec>3</sec>
+            <nanosec>0</nanosec>
+          </participant_liveliness_assert_period>
+          <participant_liveliness_lease_duration>
+            <sec>10</sec>
+            <nanosec>0</nanosec>
+          </participant_liveliness_lease_duration>
+        </discovery_config>
+        <usertraffic_receive_addresses>
+          <addresses>
+            <element>udpv4://default//0</element>
+          </addresses>
+        </usertraffic_receive_addresses>
+      </participant_qos>
+      <participant_qos name="udp_dp_prematch" base_name="udp_dp">
+        <property>
+          <value>
+            <element>
+              <name>zrdds.topic_prematch</name>
+              <value>true</value>
+              <propagate>false</propagate>
+            </element>
+          </value>
+        </property>
+      </participant_qos>
+      <participant_qos name="tcp_dp">
+        <usertraffic_receive_addresses>
+          <addresses>
+            <element>tcpv4://default//0</element>
+          </addresses>
+        </usertraffic_receive_addresses>
+        <receiver_thread_config>
+            <receive_buffer_length>4194304</receive_buffer_length>
+        </receiver_thread_config>
+      </participant_qos>
+      <participant_qos name="shmem_dp">
+        <usertraffic_receive_addresses>
+          <addresses>
+            <element>shmem://default//10485760</element>
+          </addresses>
+        </usertraffic_receive_addresses>
+      </participant_qos>
+      <!--
+      <participant_qos name="rapidio_dp">
+        <usertraffic_receive_addresses>
+          <addresses>
+            <element>rapidio://0//0</element>
+          </addresses>
+        </usertraffic_receive_addresses>
+      </participant_qos>
+      -->
+      <publisher_qos name="default" />
+      <subscriber_qos name="default" />
+      <datawriter_qos name="reliable_no_delay">
+        <protocol>
+          <push_on_write>true</push_on_write>
+        </protocol>
+      </datawriter_qos>
+      <datawriter_qos name="tcp_datawriter">
+        <reliability>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+        </reliability>
+        <message_mode>
+          <without_inlineQos>true</without_inlineQos>
+        </message_mode>
+        <property>
+          <value>
+            <element>
+              <name>sysctl.dw.statistic.fragment_length</name>
+              <value>4194304</value>
+            </element>
+          </value>
+        </property>
+      </datawriter_qos>
+      <datawriter_qos name="tcp_raw_datawriter" base_name="default_lib::default_profile::tcp_datawriter">
+        <message_mode>
+          <enable_raw_transfer>true</enable_raw_transfer>
+        </message_mode>
+      </datawriter_qos>
+      <datawriter_qos name="reliable_keep_all">
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+        </reliability>
+        <history>
+          <kind>KEEP_ALL_HISTORY_QOS</kind>
+        </history>
+        <resource_limits>
+          <max_samples>512</max_samples>
+          <max_samples_per_instance>512</max_samples_per_instance>
+        </resource_limits>
+        <protocol>
+          <rtps_reliable_writer>
+            <heartbeats_per_max_samples>32</heartbeats_per_max_samples>
+          </rtps_reliable_writer>
+        </protocol>
+        <message_mode>
+          <without_inlineQos>true</without_inlineQos>
+        </message_mode>
+      </datawriter_qos>
+      <datareader_qos name="reliable">
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+        </reliability>
+      </datareader_qos>
+      <datareader_qos name="best-effort">
+        <reliability>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+        </reliability>
+      </datareader_qos>
+      <datareader_qos name="tcp_raw_datareader">
+        <reliability>
+          <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+        </reliability>
+        <receive_addresses>
+          <addresses>
+            <element>tcpv4://default//65536</element>
+          </addresses>
+        </receive_addresses>
+      </datareader_qos>
+    </qos_profile>
+  </qos_library>
+</zrdds_qos>

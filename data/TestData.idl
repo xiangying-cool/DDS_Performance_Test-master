@@ -1,0 +1,5 @@
+typedef sequence<octet> Bytes;
+
+struct TestData {
+    Bytes value;  
+};

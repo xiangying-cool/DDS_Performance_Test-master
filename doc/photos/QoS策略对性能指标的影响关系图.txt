@@ -1,0 +1,43 @@
+graph TD
+    subgraph "QoS策略"
+        A[ReliabilityQos<br/>RELIABLE/BEST_EFFORT]
+        B[HistoryQos<br/>KEEP_LAST/KEEP_ALL]
+        C[PublishModeQos<br/>SYNC/ASYNC]
+        D[BatchQos<br/>启用/禁用]
+        E[TransportPriorityQos<br/>高/中/低优先级]
+        F[ThreadCoreAffinityQos<br/>绑核/不绑核]
+    end
+
+    subgraph "性能指标"
+        G[延迟 Latency]
+        H[吞吐量 Throughput]
+        I[可靠性 Reliability]
+        J[资源占用 Resource Usage]
+        K[抖动 Jitter]
+    end
+
+    A -->|RELIABLE增加| G
+    A -->|RELIABLE保证| I
+    A -->|RELIABLE降低| H
+
+    B -->|KEEP_ALL增加| J
+    B -->|KEEP_ALL影响| G
+
+    C -->|ASYNC降低| G
+    C -->|ASYNC提高| H
+
+    D -->|批量发送提高| H
+    D -->|批量发送增加| G
+
+    E -->|高优先级降低| G
+    E -->|高优先级降低| K
+
+    F -->|绑核降低| K
+    F -->|绑核改善| G
+
+    style A fill:#e1f5fe
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
+    style D fill:#fce4ec
+    style E fill:#f3e5f5
+    style F fill:#e0e0e0
