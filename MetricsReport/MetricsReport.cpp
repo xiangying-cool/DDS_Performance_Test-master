@@ -33,7 +33,8 @@ void MetricsReport::addResult(const TestRoundResult& result) {
                         "[MetricsReport::addResult] [PEAK CALCULATED] Round " + std::to_string(result.round_index) +
                         " | Final Peak CPU: " + std::to_string(final_peak) + "% (from history max)"
                     );
-                } else {
+                }
+                else {
                     // 理论上 GetProcessTimes 不应产生负值，但以防万一
                     Logger::getInstance().logAndPrint(
                         "[MetricsReport::addResult] [WARNING] Round " + std::to_string(result.round_index) +
@@ -41,7 +42,8 @@ void MetricsReport::addResult(const TestRoundResult& result) {
                     );
                     processed_result.end_metrics.cpu_usage_percent_peak = 0.0;
                 }
-            } else {
+            }
+            else {
                 // 处理 NaN 或 Inf 的情况
                 Logger::getInstance().logAndPrint(
                     "[MetricsReport::addResult] [ERROR] Round " + std::to_string(result.round_index) +
@@ -49,7 +51,8 @@ void MetricsReport::addResult(const TestRoundResult& result) {
                 );
                 processed_result.end_metrics.cpu_usage_percent_peak = -1.0; // 使用 -1.0 标记计算错误
             }
-        } else {
+        }
+        else {
             // 理论上不会发生 (vector 不空且 max_element 应该能找到元素)
             Logger::getInstance().logAndPrint(
                 "[MetricsReport::addResult] [ERROR] Round " + std::to_string(result.round_index) +
@@ -57,7 +60,8 @@ void MetricsReport::addResult(const TestRoundResult& result) {
             );
             processed_result.end_metrics.cpu_usage_percent_peak = -1.0; // 标记错误
         }
-    } else {
+    }
+    else {
         Logger::getInstance().logAndPrint(
             "[MetricsReport::addResult] [INFO] Round " + std::to_string(result.round_index) +
             " | No CPU usage history recorded. Attempting to use internal tracker value or setting to -1.0."
@@ -67,14 +71,15 @@ void MetricsReport::addResult(const TestRoundResult& result) {
         // 如果内部峰值也是 -1.0 或无效，则最终结果保持 -1.0 (无数据)
         double internal_peak = result.end_metrics.cpu_usage_percent_peak;
         if (std::isfinite(internal_peak) && internal_peak >= 0.0) {
-             Logger::getInstance().logAndPrint(
-                 "[MetricsReport::addResult] [PEAK FALLBACK] Round " + std::to_string(result.round_index) +
-                 " | Using internal tracker peak: " + std::to_string(internal_peak) + "%"
-             );
-             // processed_result 的 end_metrics.cpu_usage_percent_peak 已经是 internal_peak 了，无需再次赋值
-             // 但为了明确，可以再次赋值 (虽然通常不需要)
-             // processed_result.end_metrics.cpu_usage_percent_peak = internal_peak;
-        } else {
+            Logger::getInstance().logAndPrint(
+                "[MetricsReport::addResult] [PEAK FALLBACK] Round " + std::to_string(result.round_index) +
+                " | Using internal tracker peak: " + std::to_string(internal_peak) + "%"
+            );
+            // processed_result 的 end_metrics.cpu_usage_percent_peak 已经是 internal_peak 了，无需再次赋值
+            // 但为了明确，可以再次赋值 (虽然通常不需要)
+            // processed_result.end_metrics.cpu_usage_percent_peak = internal_peak;
+        }
+        else {
             // 内部队列峰值也无效或无数据，保持为 -1.0
             Logger::getInstance().logAndPrint(
                 "[MetricsReport::addResult] [INFO] Round " + std::to_string(result.round_index) +
@@ -90,17 +95,19 @@ void MetricsReport::addResult(const TestRoundResult& result) {
 
     // --- 实时输出最终计算出的峰值 ---
     // 注意：这里使用的是处理后的 processed_result
-    const auto& end_metrics = processed_result.end_metrics; 
+    const auto& end_metrics = processed_result.end_metrics;
     std::ostringstream cpu_oss;
     cpu_oss << std::fixed << std::setprecision(2)
         << "[实时 CPU] 第 " << processed_result.round_index << " 轮 | ";
-    
+
     // 格式化输出，区分有效值、无数据和错误
     if (end_metrics.cpu_usage_percent_peak >= 0.0) {
         cpu_oss << "CPU峰值: " << end_metrics.cpu_usage_percent_peak << "%";
-    } else if (end_metrics.cpu_usage_percent_peak == -1.0) {
+    }
+    else if (end_metrics.cpu_usage_percent_peak == -1.0) {
         cpu_oss << "CPU峰值: 无数据/错误"; // 更明确地表示 -1.0 的含义
-    } else {
+    }
+    else {
         // 处理其他可能的错误代码 (如果有的话)
         cpu_oss << "CPU峰值: 错误(" << end_metrics.cpu_usage_percent_peak << ")";
     }
@@ -144,12 +151,46 @@ void MetricsReport::generateSummary() const {
             << "GloMemPool峰值内存: " << end.memory_peak_kb << " KB | "
             << "GloMemPool净分配块数 (当前块): " << net_current_blocks_delta << " | ";
 
-        // --- 新增：打印系统级内存变化 ---
-        // 注意：这里计算的是系统级内存指标的增量或差值
-        oss << "系统工作集增量: " << (end.system_working_set_kb - start.system_working_set_kb) << " KB | "
-            << "系统峰值工作集: " << end.system_peak_working_set_kb << " KB | "
-            << "系统页文件增量: " << (end.system_pagefile_usage_kb - start.system_pagefile_usage_kb) << " KB";
-        // --- 新增结束 ---
+        // --- 修改：安全地计算和打印系统级内存增量 ---
+        // 关键：使用 unsigned long long 进行减法，然后处理可能的“负”结果
+
+        // 1. 工作集增量 (Working Set)
+        unsigned long long working_set_start = start.system_working_set_kb;
+        unsigned long long working_set_end = end.system_working_set_kb;
+        long long working_set_delta_kb = 0;
+        if (working_set_end >= working_set_start) {
+            working_set_delta_kb = static_cast<long long>(working_set_end - working_set_start);
+        }
+        else {
+            // 处理 end < start 的情况（虽然不常见，但可能发生）
+            // 方式1：简单地设为0 (推荐，避免显示巨大的负数)
+            working_set_delta_kb = 0;
+            // 方式2：计算负值（需要确保打印时使用 %lld）
+            // working_set_delta_kb = -static_cast<long long>(working_set_start - working_set_end);
+            // Logger::getInstance().logAndPrint("[MetricsReport] Warning: Working set end < start in round " + std::to_string(r.round_index));
+        }
+        oss << "系统工作集增量: " << working_set_delta_kb << " KB | ";
+
+        // 2. 峰值工作集 (Peak Working Set) - 通常只报告最终值
+        oss << "系统峰值工作集: " << end.system_peak_working_set_kb << " KB | ";
+
+        // 3. 页文件使用增量 (Pagefile Usage / Commit Size)
+        unsigned long long pagefile_start = start.system_pagefile_usage_kb;
+        unsigned long long pagefile_end = end.system_pagefile_usage_kb;
+        long long pagefile_delta_kb = 0;
+        if (pagefile_end >= pagefile_start) {
+            pagefile_delta_kb = static_cast<long long>(pagefile_end - pagefile_start);
+        }
+        else {
+            // 处理 end < start 的情况
+            // pagefile_delta_kb = 0; // 方式1 (推荐)
+            // pagefile_delta_kb = -static_cast<long long>(pagefile_start - pagefile_end); // 方式2
+            // Logger::getInstance().logAndPrint("[MetricsReport] Warning: Pagefile usage end < start in round " + std::to_string(r.round_index));
+            pagefile_delta_kb = 0; // 推荐方式
+        }
+        oss << "系统页文件增量: " << pagefile_delta_kb << " KB";
+        // --- 修改结束 ---
+
 
         Logger::getInstance().logAndPrint(oss.str());
     }
